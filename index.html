@@ -14,7 +14,6 @@
       --text:#ecf2ff;
       --muted: rgba(236,242,255,.72);
 
-      /* iOS glass */
       --glassA: rgba(255,255,255,.12);
       --glassB: rgba(255,255,255,.06);
       --stroke: rgba(255,255,255,.18);
@@ -26,10 +25,11 @@
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
+
     body{
       margin:0;
-      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
-                   Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+                   Segoe UI, Roboto, Helvetica, Arial;
       color:var(--text);
       overflow:hidden;
       background:
@@ -39,7 +39,6 @@
         linear-gradient(180deg, var(--bg1), var(--bg2));
     }
 
-    /* Subtle moving aurora */
     .aurora{
       position:fixed; inset:-20%;
       background:
@@ -49,26 +48,24 @@
       filter: blur(28px);
       animation: drift 14s var(--ease) infinite alternate;
       pointer-events:none;
-      opacity:.9;
-    }
-    @keyframes drift{
-      from{ transform: translate3d(-2%, -1%, 0) scale(1.02); }
-      to{ transform: translate3d(2%, 1.5%, 0) scale(1.06); }
     }
 
-    canvas#fx{
-      position:fixed; inset:0;
-      width:100%; height:100%;
-      display:block;
+    @keyframes drift{
+      from{ transform: translate(-2%, -1%) scale(1.02); }
+      to{ transform: translate(2%, 1.5%) scale(1.06); }
+    }
+
+    canvas{
+      position:fixed;
+      inset:0;
       pointer-events:none;
     }
 
     .wrap{
-      position:relative;
       height:100%;
       display:grid;
       place-items:center;
-      padding: max(18px, env(safe-area-inset-top)) 16px max(18px, env(safe-area-inset-bottom));
+      padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom);
     }
 
     .card{
@@ -79,362 +76,154 @@
       box-shadow: var(--shadow);
       backdrop-filter: blur(16px) saturate(160%);
       -webkit-backdrop-filter: blur(16px) saturate(160%);
-      overflow:hidden;
-      position:relative;
-    }
-
-    /* iOS-like inner highlight line */
-    .card::before{
-      content:"";
-      position:absolute; inset:0;
-      background: linear-gradient(180deg, rgba(255,255,255,.22), transparent 28%);
-      opacity:.55;
-      pointer-events:none;
-    }
-
-    .content{
-      position:relative;
-      padding: 22px 18px 18px;
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-      align-items:center;
+      padding: 28px 22px 26px;
       text-align:center;
     }
 
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.08);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 14px 40px rgba(0,0,0,.22);
-      color: var(--muted);
-      font-size: 13px;
-      letter-spacing:.2px;
-      user-select:none;
-    }
-
-    .title{
-      font-size: clamp(28px, 4.8vw, 56px);
-      line-height:1.06;
-      margin: 0;
+    h1{
+      margin: 0 0 14px;
+      font-size: clamp(30px, 5vw, 56px);
       letter-spacing: -0.02em;
-      text-shadow: 0 10px 40px rgba(0,0,0,.35);
     }
 
     .love{
-      margin: 0;
+      margin: 0 0 14px;
       font-size: clamp(18px, 3.4vw, 28px);
-      line-height:1.25;
       font-weight: 800;
-      letter-spacing: .02em;
-
-      padding: 12px 14px;
+      padding: 12px 18px;
       border-radius: 18px;
-
       border: 1px solid rgba(255,255,255,.22);
       background:
-        radial-gradient(120px 60px at 20% 30%, rgba(255,255,255,.28), transparent 60%),
         linear-gradient(135deg, rgba(255,120,210,.28), rgba(120,200,255,.18));
-      box-shadow:
-        0 22px 70px rgba(255,120,210,.18),
-        0 22px 70px rgba(120,200,255,.12);
-      backdrop-filter: blur(12px) saturate(160%);
-      -webkit-backdrop-filter: blur(12px) saturate(160%);
-      transform: translateZ(0);
+      box-shadow: 0 20px 60px rgba(255,120,210,.25);
+      backdrop-filter: blur(12px);
     }
 
     .hint{
-      margin: 0;
       font-size: 13px;
-      color: rgba(236,242,255,.72);
-      max-width: 52ch;
+      opacity:.75;
+      margin-bottom:18px;
     }
 
     .row{
       display:flex;
-      gap:10px;
+      gap:12px;
       flex-wrap:wrap;
       justify-content:center;
-      margin-top: 6px;
     }
 
     button{
-      appearance:none;
+      border-radius: 16px;
+      padding: 10px 14px;
       border: 1px solid rgba(255,255,255,.18);
       background: rgba(255,255,255,.10);
       color: var(--text);
-      border-radius: 16px;
-      padding: 10px 12px;
-      font-size: 14px;
       font-weight: 600;
+      font-size:14px;
       cursor:pointer;
-      backdrop-filter: blur(12px) saturate(160%);
-      -webkit-backdrop-filter: blur(12px) saturate(160%);
-      box-shadow: 0 16px 50px rgba(0,0,0,.22);
-      transition: transform .2s var(--ease), background .2s var(--ease);
-      user-select:none;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 16px 40px rgba(0,0,0,.22);
     }
-    button:active{ transform: scale(.98); }
-    button:hover{ background: rgba(255,255,255,.14); }
 
-    /* Floating text */
     .float-layer{
-      position:fixed; inset:0;
+      position:fixed;
+      inset:0;
       pointer-events:none;
     }
+
     .float{
       position:absolute;
       left: var(--x);
       top: 110%;
-      font-weight: 700;
-      letter-spacing: .02em;
-      color: rgba(236,242,255,.88);
-      text-shadow: 0 10px 30px rgba(0,0,0,.35);
-      font-size: clamp(14px, 2.6vw, 22px);
-      opacity: 0;
-      transform: translate3d(-50%, 0, 0);
+      opacity:0;
+      font-weight:600;
       animation: rise var(--dur) var(--ease) infinite;
-      filter: drop-shadow(0 18px 30px rgba(0,0,0,.25));
-      white-space: nowrap;
-    }
-    .float strong{
-      color: rgba(255,255,255,.98);
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.22);
-      background: rgba(255,255,255,.10);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
     }
 
     @keyframes rise{
-      0%   { opacity: 0; transform: translate3d(-50%, 0, 0) scale(.98); }
-      10%  { opacity: .95; }
-      100% { opacity: 0; transform: translate3d(-50%, -140vh, 0) scale(1.06); }
-    }
-
-    /* Reduce motion accessibility */
-    @media (prefers-reduced-motion: reduce){
-      .aurora{ animation:none; }
-      .float{ animation:none; opacity:.75; top:18%; }
-      canvas#fx{ display:none; }
+      0%{opacity:0; transform:translate(-50%,0)}
+      10%{opacity:.9}
+      100%{opacity:0; transform:translate(-50%,-140vh)}
     }
   </style>
 </head>
 
 <body>
-  <div class="aurora" aria-hidden="true"></div>
+  <div class="aurora"></div>
   <canvas id="fx"></canvas>
-
-  <div class="float-layer" id="floatLayer" aria-hidden="true"></div>
+  <div class="float-layer" id="floatLayer"></div>
 
   <main class="wrap">
-    <section class="card" role="group" aria-label="Happy New Year Glass Card">
-      <div class="content">
-        <div class="badge">✨ Glass • iOS vibe • Mobile responsive</div>
+    <section class="card">
+      <h1>Happy New Year</h1>
+      <p class="love">I LOVE YOU BABY!</p>
+      <p class="hint">Tap “Fireworks” to burst, or just enjoy the auto-show.</p>
 
-        <h1 class="title">Happy New Year</h1>
-
-        <p class="love">I LOVE YOU BABY!</p>
-
-        <p class="hint">
-          Tap “Fireworks” to burst, or just enjoy the auto-show.
-        </p>
-
-        <div class="row">
-          <button id="btnBurst" type="button">🎆 Fireworks</button>
-          <button id="btnMoreText" type="button">💫 More floating text</button>
-          <button id="btnCalm" type="button">🌙 Calm mode</button>
-        </div>
+      <div class="row">
+        <button onclick="burst()">🎆 Fireworks</button>
+        <button onclick="spawnFloat()">💫 More floating text</button>
+        <button onclick="toggleMode()">☀️ Party mode</button>
       </div>
     </section>
   </main>
 
   <script>
-    // ===== Canvas setup (HiDPI) =====
     const canvas = document.getElementById('fx');
-    const ctx = canvas.getContext('2d', { alpha: true });
-    let W = 0, H = 0, DPR = 1;
+    const ctx = canvas.getContext('2d');
+    let W,H,party=true;
+    const sparks=[];
 
     function resize(){
-      DPR = Math.min(2.2, window.devicePixelRatio || 1);
-      W = canvas.width  = Math.floor(window.innerWidth  * DPR);
-      H = canvas.height = Math.floor(window.innerHeight * DPR);
-      canvas.style.width = '100%';
-      canvas.style.height = '100%';
-      ctx.setTransform(DPR,0,0,DPR,0,0);
+      W=canvas.width=innerWidth;
+      H=canvas.height=innerHeight;
     }
-    window.addEventListener('resize', resize, { passive:true });
-    resize();
+    addEventListener('resize',resize); resize();
 
-    // ===== Particles =====
-    const sparks = [];
-    const trails = [];
-
-    function rand(min, max){ return Math.random()*(max-min)+min; }
-
-    function addTrail(x,y){
-      trails.push({ x,y, life: 1, r: rand(10,18) });
-    }
-
-    function fireworkBurst(x, y){
-      const count = Math.floor(rand(70, 110));
-      const hue = rand(0, 360);
-      for(let i=0;i<count;i++){
-        const a = rand(0, Math.PI*2);
-        const sp = rand(2.4, 6.4);
+    function burst(x=W/2,y=H/3){
+      for(let i=0;i<90;i++){
+        const a=Math.random()*Math.PI*2;
         sparks.push({
-          x, y,
-          vx: Math.cos(a)*sp,
-          vy: Math.sin(a)*sp,
-          g: rand(0.02, 0.06),
-          life: rand(40, 70),
-          hue,
-          size: rand(1.2, 2.4),
-          drag: rand(0.985, 0.994)
+          x,y,
+          vx:Math.cos(a)*Math.random()*6,
+          vy:Math.sin(a)*Math.random()*6,
+          life:60
         });
       }
     }
 
-    // ===== Animation loop =====
-    let frame = 0;
-    let calm = false;
-
-    function tick(){
-      frame++;
-      // Clear with fade for smooth trails
-      ctx.fillStyle = calm ? 'rgba(0,0,0,0.18)' : 'rgba(0,0,0,0.14)';
-      ctx.fillRect(0,0,window.innerWidth,window.innerHeight);
-
-      // Occasional auto fireworks (less in calm mode)
-      if(!calm){
-        if(frame % 46 === 0){
-          fireworkBurst(rand(80, window.innerWidth-80), rand(90, window.innerHeight*0.55));
-        }
-      } else {
-        if(frame % 110 === 0){
-          fireworkBurst(rand(120, window.innerWidth-120), rand(120, window.innerHeight*0.45));
-        }
-      }
-
-      // Trails
-      for(let i=trails.length-1;i>=0;i--){
-        const t = trails[i];
-        t.life -= 0.06;
-        t.r *= 0.985;
-        if(t.life <= 0){ trails.splice(i,1); continue; }
-        ctx.beginPath();
-        ctx.arc(t.x, t.y, t.r, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(255,255,255,${0.12*t.life})`;
-        ctx.fill();
-      }
-
-      // Sparks
-      for(let i=sparks.length-1;i>=0;i--){
-        const p = sparks[i];
-        p.life -= 1;
-        p.vx *= p.drag;
-        p.vy *= p.drag;
-        p.vy += p.g * (calm ? 0.75 : 1);
-
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if(frame % 2 === 0) addTrail(p.x, p.y);
-
-        const alpha = Math.max(0, Math.min(1, p.life / 60));
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-        ctx.fillStyle = `hsla(${p.hue}, 95%, 70%, ${alpha})`;
-        ctx.fill();
-
-        // subtle glow
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size*3.2, 0, Math.PI*2);
-        ctx.fillStyle = `hsla(${p.hue}, 95%, 70%, ${alpha*0.08})`;
-        ctx.fill();
-
-        if(p.life <= 0 || p.x < -50 || p.x > window.innerWidth+50 || p.y < -80 || p.y > window.innerHeight+80){
-          sparks.splice(i,1);
-        }
-      }
-
-      requestAnimationFrame(tick);
+    function loop(){
+      ctx.fillStyle='rgba(0,0,0,.15)';
+      ctx.fillRect(0,0,W,H);
+      sparks.forEach((p,i)=>{
+        p.life--;
+        p.x+=p.vx;
+        p.y+=p.vy+=0.05;
+        ctx.fillStyle=`rgba(255,200,255,${p.life/60})`;
+        ctx.fillRect(p.x,p.y,2,2);
+        if(p.life<=0) sparks.splice(i,1);
+      });
+      if(party && Math.random()<0.03) burst(Math.random()*W,Math.random()*H/2);
+      requestAnimationFrame(loop);
     }
-    requestAnimationFrame(tick);
+    loop();
 
-    // ===== Floating text generator =====
-    const floatLayer = document.getElementById('floatLayer');
-    let floatCount = 10;
-
+    const floatLayer=document.getElementById('floatLayer');
     function spawnFloat(){
-      const el = document.createElement('div');
-      el.className = 'float';
-      const x = rand(10, 90).toFixed(2) + 'vw';
-      const dur = rand(7.5, 12.5).toFixed(2) + 's';
+      const d=document.createElement('div');
+      d.className='float';
+      d.style.setProperty('--x',Math.random()*90+'vw');
+      d.style.setProperty('--dur',(8+Math.random()*5)+'s');
+      d.innerText=['Forever & always ♾️','Happy New Year ✨','Cheers to 2026 🥂','I LOVE YOU BABY!'][Math.floor(Math.random()*4)];
+      floatLayer.appendChild(d);
+      setTimeout(()=>d.remove(),13000);
+    }
+    setInterval(spawnFloat,1200);
 
-      // Mix of phrases; keep highlight on LOVE line sometimes
-      const phrases = [
-        'Happy New Year ✨',
-        'Wishing you joy 💫',
-        'New dreams, new us 🌙',
-        'Cheers to 2026 🥂',
-        '<strong>I LOVE YOU BABY!</strong>',
-        'You are my home 🫧',
-        'Forever & always ♾️',
-      ];
-      el.style.setProperty('--x', x);
-      el.style.setProperty('--dur', dur);
-      el.style.animationDelay = (-rand(0, 10)).toFixed(2) + 's';
-      el.innerHTML = phrases[Math.floor(Math.random()*phrases.length)];
-
-      floatLayer.appendChild(el);
-
-      // cleanup
-      setTimeout(() => el.remove(), 14000);
+    function toggleMode(){
+      party=!party;
     }
 
-    function seedFloat(n){
-      for(let i=0;i<n;i++) spawnFloat();
-    }
-
-    seedFloat(floatCount);
-
-    // Keep spawning gently
-    setInterval(() => {
-      if(document.hidden) return;
-      spawnFloat();
-    }, 850);
-
-    // ===== UI buttons =====
-    document.getElementById('btnBurst').addEventListener('click', () => {
-      const x = rand(120, window.innerWidth-120);
-      const y = rand(120, window.innerHeight*0.55);
-      fireworkBurst(x, y);
-      fireworkBurst(x + rand(-90, 90), y + rand(-60, 60));
-    });
-
-    document.getElementById('btnMoreText').addEventListener('click', () => {
-      for(let i=0;i<6;i++) spawnFloat();
-    });
-
-    document.getElementById('btnCalm').addEventListener('click', (e) => {
-      calm = !calm;
-      e.currentTarget.textContent = calm ? '☀️ Party mode' : '🌙 Calm mode';
-    });
-
-    // Tap anywhere for fireworks (mobile-friendly)
-    window.addEventListener('pointerdown', (ev) => {
-      // Avoid accidental inside button taps triggering extra
-      if(ev.target && ev.target.tagName === 'BUTTON') return;
-      fireworkBurst(ev.clientX, ev.clientY);
-    }, { passive:true });
+    addEventListener('pointerdown',e=>burst(e.clientX,e.clientY));
   </script>
 </body>
 </html>
